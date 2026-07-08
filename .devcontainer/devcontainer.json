@@ -1,0 +1,22 @@
+{
+    "name": "Entorno DDSI - Java 21 - Climalert",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "java.compile.nullAnalysis.mode": "automatic"
+            },
+            "extensions": [
+                "vscjava.vscode-java-pack",
+                "vmware.vscode-spring-boot",
+                "vscjava.vscode-spring-initializr",
+                "jebbs.plantuml",
+                "shengchen.vscode-checkstyle"
+            ]
+        }
+    },
+    "forwardPorts": [8081, 8082, 8083, 15672],
+    "remoteUser": "vscode"
+}
