@@ -39,6 +39,7 @@
   
       <build>
         <plugins>
+          <!-- Plugin para compilar código Java -->
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
@@ -48,6 +49,14 @@
               <parameters>true</parameters>
             </configuration>
           </plugin>
+  
+          <!-- Plugin moderno para correr tests de JUnit 5 -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>3.5.2</version>
+          </plugin>
         </plugins>
       </build>
+
     </project>
