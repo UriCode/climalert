@@ -19,7 +19,8 @@
             <!-- Dependencia a nuestro módulo de dominio -->                                                                                                                                                                               
             <dependency>                                                                                                                                                                                                                   
                 <groupId>ar.edu.utn.frba.dds</groupId>                                                                                                                                                                                     
-                <artifactId>common</artifactId>                                                                                                                                                                                            
+                <artifactId>common</artifactId>        
+                <version>${project.version}</version>                                                                                                                                                                                    
             </dependency>                                                                                                                                                                                                                  
                                                                                                                                                                                                                                            
             <!-- Spring Boot Starter Core / Web -->                                                                                                                                                                                        
