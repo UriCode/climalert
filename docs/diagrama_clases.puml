@@ -1,0 +1,69 @@
+    @startuml                                                                                                                                                                                                                              
+    !theme crt-amber                                                                                                                                                                                                                       
+    title Climalert - Diagrama de Clases                                                                                                                                                                               
+                                                                                                                                                                                                                                           
+    class MedicionClimatica {                                                                                                                                                                                                              
+      - temperatura: Double                                                                                                                                                                                                                
+      - humedad: Double                                                                                                                                                                                                                    
+      - fechaHora: LocalDateTime                                                                                                                                                                                                           
+      - ubicacion: String                                                                                                                                                                                                                  
+    }                                                                                                                                                                                                                                      
+                                                                                                                                                                                                                                           
+    class Alerta {                                                                                                                                                                                                                         
+      - fechaHora: LocalDateTime                                                                                                                                                                                                           
+      - mensaje: String                                                                                                                                                                                                                    
+      - medicionOriginal: MedicionClimatica                                                                                                                                                                                                
+    }                                                                                                                                                                                                                                      
+                                                                                                                                                                                                                                           
+    interface ReglaAlerta {                                                                                                                                                                                                                
+      + esCritica(medicion: MedicionClimatica): Boolean                                                                                                                                                                                    
+      + generarMensaje(medicion: MedicionClimatica): String                                                                                                                                                                                
+    }                                                                                                                                                                                                                                      
+                                                                                                                                                                                                                                           
+    class ReglaAlertaCritica implements ReglaAlerta {                                                                                                                                                                                      
+      + esCritica(medicion: MedicionClimatica): Boolean                                                                                                                                                                                    
+      + generarMensaje(medicion: MedicionClimatica): String
+    }
+  
+    interface ProveedorClima {
+      + obtenerClimaActual(ubicacion: String): MedicionClimatica
+    }
+  
+    interface NotificadorAlerta {
+      + notificar(alerta: Alerta): void
+    }
+  
+    interface RepositorioMediciones {
+      + guardar(medicion: MedicionClimatica): void
+      + obtenerUltima(): Optional<MedicionClimatica>
+      + obtenerTodas(): List<MedicionClimatica>
+    }
+  
+    class ClimaService {
+      - proveedorClima: ProveedorClima
+      - repositorioMediciones: RepositorioMediciones
+      - notificadorAlerta: NotificadorAlerta
+      - reglaAlerta: ReglaAlerta
+      + registrarClimaActual(ubicacion: String): void
+      + evaluarAlertas(): void
+    }
+  
+    class ClimaScheduler {
+      - climaService: ClimaService
+      + obtenerClimaPeriodicamente(): void
+      + evaluarAlertasPeriodicamente(): void
+    }
+  
+    ' Relaciones de Estructura (Asociaciones)
+    Alerta --> MedicionClimatica
+    ClimaService --> ProveedorClima : "usa"
+    ClimaService --> RepositorioMediciones : "usa"
+    ClimaService --> NotificadorAlerta : "usa"
+    ClimaService --> ReglaAlerta : "aplica"
+    ClimaScheduler --> ClimaService : "invoca"
+  
+    ' Relaciones de Comportamiento / Dependencia (Uso o Creación)
+    ClimaService ..> MedicionClimatica : "recupera"
+    ClimaService ..> Alerta : "crea"
+  
+    @enduml
