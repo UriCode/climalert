@@ -10,6 +10,12 @@
       <packaging>pom</packaging>
   
       <name>Climalert</name>
+
+      <modules>
+        <module>common-lib</module>
+        <module>alerta-service</module>
+      </modules>
+
   
       <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
