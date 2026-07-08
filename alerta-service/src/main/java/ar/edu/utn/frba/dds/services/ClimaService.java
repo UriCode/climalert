@@ -5,7 +5,9 @@ import ar.edu.utn.frba.dds.domain.NotificadorAlerta;
 import ar.edu.utn.frba.dds.domain.ProveedorClima;
 import ar.edu.utn.frba.dds.domain.ReglaAlerta;
 import ar.edu.utn.frba.dds.domain.RepositorioMediciones;
-import java.time.LocalDateTime;
+import ar.edu.utn.frba.dds.domain.Alerta;
+i
+mport java.time.LocalDateTime;
 import java.util.Optional;
 
 public class ClimaService {
@@ -24,7 +26,7 @@ public class ClimaService {
 
     // Obtener y registrar el clima actual
     public void registrarClimaActual(String ubicacion) {
-        MedicionClimatica medicion = proveedorClima.obtenerMedicion(ubicacion);
+        MedicionClimatica medicion = proveedorClima.obtenerClimaActual(ubicacion);
         repositorioMediciones.guardar(medicion);
     }
 
@@ -45,6 +47,8 @@ public class ClimaService {
             .mensaje(mensaje)
             .medicionOriginal(ultimaMedicion)
             .build();
+
+            notificadorAlerta.notificar(alerta);
         }
     }
 }
