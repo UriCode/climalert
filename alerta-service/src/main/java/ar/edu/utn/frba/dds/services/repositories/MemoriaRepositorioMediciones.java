@@ -2,6 +2,11 @@ package ar.edu.utn.frba.dds.services.repositories;
 
 import ar.edu.utn.frba.dds.domain.MedicionClimatica;
 import ar.edu.utn.frba.dds.domain.RepositorioMediciones;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import org.springframework.stereotype.Repositoryl;
+
 public class MemoriaRepositorioMediciones implements RepositorioMediciones {
     private final List<MedicionClimatica> mediciones = new ArrayList<>();
 
