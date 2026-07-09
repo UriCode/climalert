@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Repositoryl;
 
+@Repository
 public class MemoriaRepositorioMediciones implements RepositorioMediciones {
     private final List<MedicionClimatica> mediciones = new ArrayList<>();
 
