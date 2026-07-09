@@ -1,11 +1,11 @@
-package ar.edu.utn.frba.dds.services.repositories;
+package ar.edu.utn.frba.dds.repositories;
 
 import ar.edu.utn.frba.dds.domain.MedicionClimatica;
 import ar.edu.utn.frba.dds.domain.RepositorioMediciones;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import org.springframework.stereotype.Repositoryl;
+import org.springframework.stereotype.Repository;
 
 @Repository
 public class MemoriaRepositorioMediciones implements RepositorioMediciones {
@@ -17,7 +17,7 @@ public class MemoriaRepositorioMediciones implements RepositorioMediciones {
     }
 
     @Override
-    public Optional<MedicionClimatica> obetenerUltima() {
+    public Optional<MedicionClimatica> obtenerUltima() {
         if (mediciones.isEmpty()) {
             return Optional.empty();
         }
