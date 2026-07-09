@@ -1,0 +1,10 @@
+spring:
+    application:
+        name: alerta-service
+
+weatherapi:
+    url: http://api.weatherapi.com/v1
+    key: ""
+
+server:
+    port: 9090
