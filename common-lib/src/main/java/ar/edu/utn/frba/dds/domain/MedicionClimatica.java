@@ -1,6 +1,7 @@
 package ar.edu.utn.frba.dds.domain;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,4 +16,25 @@ public class MedicionClimatica {
     private Double humedad;
     private LocalDateTime fechaHora;
     private String ubicacion;
+    private boolean evaluada;
+
+    public Optional<Alerta> evaluar(ReglaAlerta regla) {
+        // Si ya fue evaluada no la volvemos a procesar
+        if (this.evaluada) {
+            return Optional.empty();
+        }
+
+        // Cambiamos su estado si no fue evaluada
+        if (regla.esCritica(this)) {
+            String mensaje = regla.generarMensaje(this);
+                .fechaHora(LocalDateTime.now())
+                .mensaje(mensaje)
+                .medicionOriginal(this);
+                .build();
+            return Optional.of(alerta);
+        }
+
+        return Optional.empty();
+
+    }
 }

@@ -1,13 +1,11 @@
 package ar.edu.utn.frba.dds.services;
 
+import ar.edu.utn.frba.dds.domain.Alerta;
 import ar.edu.utn.frba.dds.domain.MedicionClimatica;
 import ar.edu.utn.frba.dds.domain.NotificadorAlerta;
 import ar.edu.utn.frba.dds.domain.ProveedorClima;
 import ar.edu.utn.frba.dds.domain.ReglaAlerta;
 import ar.edu.utn.frba.dds.domain.RepositorioMediciones;
-import ar.edu.utn.frba.dds.domain.Alerta;
-
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 public class ClimaService {
@@ -39,16 +37,13 @@ public class ClimaService {
         }
 
         MedicionClimatica ultimaMedicion = ultimaMedicionOpt.get();
-        if(reglaAlerta.esCritica(ultimaMedicion)) {
-            String mensaje = reglaAlerta.generarMensaje(ultimaMedicion);
 
-            Alerta alerta = Alerta.builder()
-            .fechaHora(LocalDateTime.now())
-            .mensaje(mensaje)
-            .medicionOriginal(ultimaMedicion)
-            .build();
+        Optional<Alerta> alertaOpt = ultimaMedicion.evaluar(reglaAlerta);
 
+        alertaOpt.ifPresent(alerta->{
             notificadorAlerta.notificar(alerta);
-        }
+            // Guarda el nuevo estado de la medicion
+            repositorioMediciones.guardar(ultimaMedicion);
+        });
     }
 }

@@ -14,6 +14,12 @@ De esta manera separo la regla de evaluacion del clima del servicio que va a coo
 Patron Adapter: Usando una interfaz ProveedorClima y el adaptador WeatherApiAdapter que la consuma
 Con esto me separo de tener que conocer la estructura de la API externa, el adaptador va a traducir las peticiones a un objeto del dominio (MedicionClimatica)
 
+### MedicionClimatica
+Se detecta que bajo la estructura del enunciado, se hace una lectura cada 5 min pero se analizan las alertas cada minuto, esto genera ciclos de envio innecesarios si la ultima medicion es efectivamente una medicion que cumple la condicion de ser crítica. Para evitar los envios extras, se agrega un atributo a el objeto de dominio MedicionClimatica para que sepa responder si fue evaluada. 
+Con esto gano:
+- Encapsulamiento para la regla de negocio "Una medicion deberia evaluarse una sola vez" y el cambio de estado queda dentro del objeto que posee la informacion
+- Testeabilidad: Ahora puedo probar unitariamente MedicionClimatica sin mockear repositorios o servicios
+
 ## Persistencia
 voy a persistir en memoria con un repository para esta primer iteracion
 
