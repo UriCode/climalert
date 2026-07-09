@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.RestTemplate; 
 
 @Component
 public class WeatherApiAdapter implements ProveedorClima {
@@ -24,7 +24,7 @@ public class WeatherApiAdapter implements ProveedorClima {
         this.apiUrl = apiUrl;
     }
 
-    @override
+    @Override
     public MedicionClimatica obtenerClimaActual(String ubicacion){
         // Un mock en caso de no haber API configurada
         if (apiKey == null || apiKey.isEmpty()){
@@ -32,25 +32,25 @@ public class WeatherApiAdapter implements ProveedorClima {
             return MedicionClimatica.builder()
                 .temperatura(36.0)
                 .humedad(65.0)
-                .fechaHora(LocalDAteTime.now())
+                .fechaHora(LocalDateTime.now())
                 .ubicacion(ubicacion)
                 .build();
         }
 
         try {
             String url = String.format("%s/current.json?key=%s&q=%s", apiUrl, apiKey, ubicacion);
-            Map<?, ?> response = resTemplate.getForObject(url, Map.class);
+            Map<?, ?> response = restTemplate.getForObject(url, Map.class);
 
             if(response == null || !response.containsKey("current")){
-                throws new RuntimeException("Respuesta nula o inválida de WeatherAPI");
+                throw new RuntimeException("Respuesta nula o inválida de WeatherAPI");
             }
 
             Map<?, ?> locationMap = (Map<?, ?>) response.get("location");
             Map<?, ?> currentMap = (Map<?, ?>) response.get("current");
 
             String nombreUbicacion = locationMap != null ? (String) locationMap.get("name") : ubicacion;
-            Number temp = (Number) currenMap.get("temp_c");
-            Number hum = (Number) currentMap.get(humidity);
+            Number temp = (Number) currentMap.get("temp_c");
+            Number hum = (Number) currentMap.get("humidity");
 
             return MedicionClimatica.builder()
                 .temperatura(temp.doubleValue())
@@ -60,6 +60,13 @@ public class WeatherApiAdapter implements ProveedorClima {
                 .build();
         } catch(Exception e) {
             System.err.println("Error al consultar WeatherAPI: " + e.getMessage());
+            System.err.println("Retornando mock de medicion");
+            return MedicionClimatica.builder()
+                .temperatura(36.0)
+                .humedad(65.0)
+                .fechaHora(LocalDateTime.now())
+                .ubicacion(ubicacion)
+                .build();
         }
     }
 }
