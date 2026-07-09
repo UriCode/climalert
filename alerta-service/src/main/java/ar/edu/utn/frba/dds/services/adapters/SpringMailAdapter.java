@@ -1,5 +1,12 @@
 package ar.edu.utn.frba.dds.adapters;
 
+import ar.edu.utn.frba.dds.domain.Alerta;
+import ar.edu.utn.frba.dds.domain.NotificadorAlerta;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Component;
+
 @Component
 public class SpringMailAdapter implements NotificadorAlerta{
     private final JavaMailSender mailSender;
@@ -13,19 +20,20 @@ public class SpringMailAdapter implements NotificadorAlerta{
         this.mailSender = mailSender;
     }
 
-    @Override void notificar(Alerta alerta){
+    @Override 
+    public void notificar(Alerta alerta){
         if(mailSender == null) {
             System.out.println("\n[SMTP MOCK] Enviando correo de alerta...");
-            for(String des : destinatarios){
-                System.out.printf(">> Para %s\n>> Asunto: ALERTA METEOROLÓGICA\n>> Mensaje: $s\n\n", dest, alerta.getMensaje());
+            for(String dest : destinatarios){
+                System.out.printf(">> Para %s\n>> Asunto: ALERTA METEOROLÓGICA\n>> Mensaje: %s\n\n", dest, alerta.getMensaje());
             }
             return;
         }
         try{
-            SimpleMailMessage mail new SimpleMailMessage();
+            SimpleMailMessage mail = new SimpleMailMessage();
             mail.setFrom("climaler@clima.com");
             mail.setTo(destinatarios);
-            mail.serSubject("ALETA METEOROLÓGICA");
+            mail.setSubject("ALETA METEOROLÓGICA");
             mail.setText(alerta.getMensaje());
 
             mailSender.send(mail);
