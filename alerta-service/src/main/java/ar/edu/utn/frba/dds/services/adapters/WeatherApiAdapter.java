@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 @Component
-public class WeatherApiAdapter {
+public class WeatherApiAdapter implements ProveedorClima {
     private final RestTemplate restTemplate;
     private final String apiKey;
     private final String apiUrl;
