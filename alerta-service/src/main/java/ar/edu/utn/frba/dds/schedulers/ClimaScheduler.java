@@ -15,7 +15,7 @@ public class ClimaScheduler {
     // Cada 5 min obtiene el clima de CABA y lo guarda
     @Scheduled(fixedRate = 300000)
     public void obtenerClimaPeriodicamente(){
-        System.out.println("[Scheduler] Obteniedno clima actual para CABA...");
+        System.out.println("[Scheduler] Obteniendo clima actual para CABA...");
         climaService.registrarClimaActual("CABA");
     }
 
