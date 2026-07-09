@@ -4,7 +4,7 @@ spring:
 
 weatherapi:
     url: http://api.weatherapi.com/v1
-    key: ""
+    key: ${WEATHER_API_KEY:}
 
 server:
     port: 9090

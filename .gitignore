@@ -17,3 +17,6 @@ target/
 .env                                                                                                                                                                                                                                   
 .env.local                                                                                                                                                                                                                             
 .env.*.local
+
+# Configuración local de desarrollo
+alerta-service/src/main/resources/application-dev.properties
