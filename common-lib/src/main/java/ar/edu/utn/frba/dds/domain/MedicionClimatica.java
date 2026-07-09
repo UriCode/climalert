@@ -25,11 +25,15 @@ public class MedicionClimatica {
         }
 
         // Cambiamos su estado si no fue evaluada
+        this.evaluada = true;
+
         if (regla.esCritica(this)) {
             String mensaje = regla.generarMensaje(this);
+
+            Alerta alerta = Alerta.builder()
                 .fechaHora(LocalDateTime.now())
                 .mensaje(mensaje)
-                .medicionOriginal(this);
+                .medicionOriginal(this)
                 .build();
             return Optional.of(alerta);
         }
