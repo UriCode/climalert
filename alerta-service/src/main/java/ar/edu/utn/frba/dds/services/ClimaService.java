@@ -26,6 +26,14 @@ public class ClimaService {
     public void registrarClimaActual(String ubicacion) {
         MedicionClimatica medicion = proveedorClima.obtenerClimaActual(ubicacion);
         repositorioMediciones.guardar(medicion);
+
+        // Loggeo para ver si la API responde bien
+        System.out.printf("[API CLIMA] Registro exitoso para %s -> Temp: %.1f°C, Humedad: %.1f%% (Fecha: %s)\n",                                                                                                                       
+                medicion.getUbicacion(),                                                                                                                                                                                                   
+                medicion.getTemperatura(),                                                                                                                                                                                                 
+                medicion.getHumedad(),                                                                                                                                                                                                     
+                medicion.getFechaHora()                                                                                                                                                                                                    
+            );  
     }
 
     // Evaluar si el clima actual amerita una alerta

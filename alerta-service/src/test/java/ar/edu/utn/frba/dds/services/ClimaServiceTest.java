@@ -42,7 +42,7 @@ public class ClimaServiceTest {
     @Test                                                                                                                                                                                                                              
     public void registrarClimaActual_deberiaGuardarLaMedicion() {                                                                                                                                                                      
         // Arrange                                                                                                                                                                                                                     
-        String ubicacion = "CABA";                                                                                                                                                                                                     
+        String ubicacion = "Buenos Aires, Argentina";                                                                                                                                                                                                     
         MedicionClimatica medicion = MedicionClimatica.builder()                                                                                                                                                                       
             .temperatura(25.0)                                                                                                                                                                                                         
             .humedad(50.0)                                                                                                                                                                                                             
@@ -67,7 +67,7 @@ public class ClimaServiceTest {
             .temperatura(36.0) // Mayor a 35°
             .humedad(65.0)     // Mayor a 60%
             .fechaHora(LocalDateTime.now())
-            .ubicacion("CABA")
+            .ubicacion("Buenos Aires, Argentina")
             .build();
             
         when(repositorioMediciones.obtenerUltima()).thenReturn(Optional.of(climaCritico));
@@ -87,7 +87,7 @@ public class ClimaServiceTest {
             .temperatura(30.0) // Menor a 35°
             .humedad(50.0)     // Menor a 60%
             .fechaHora(LocalDateTime.now())
-            .ubicacion("CABA")
+            .ubicacion("Buenos Aires, Argentina")
             .build();
             
         when(repositorioMediciones.obtenerUltima()).thenReturn(Optional.of(climaNormal));
